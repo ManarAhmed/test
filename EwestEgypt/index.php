@@ -697,5 +697,41 @@ if (isset($_POST['hi'])){
 
 </html>
 <?php
-echo mail('manar.makhlouf92@gmail.com','$email_subject','$email_body');exit();
-?>
+$to = 'manar.makhlouf92@gmail.com';
+$subject = 'This is subject';
+$message = 'This is body of email';
+$headers = "From: webmaster@example.com" . "\r\n" .
+"CC: somebodyelse@example.com";
+mail($to,$subject,$message,$headers);
+
+
+// Pear Mail Library
+require_once "Mail.php";
+
+$from = '<eng.manar92@ahoo.com>';
+$to = '<manar.makhlouf92@gmail.com>';
+$subject = 'Hi!';
+$body = "Hi,\n\nHow are you?";
+
+$headers = array(
+    'From' => $from,
+    'To' => $to,
+    'Subject' => $subject
+);
+
+$smtp = Mail::factory('smtp', array(
+        'host' => 'ssl://smtp.gmail.com',
+        'port' => '465',
+        'auth' => true,
+        'username' => 'manar.makhlouf92@gmail.com',
+        'password' => '@6688067@'
+    ));
+
+$mail = $smtp->send($to, $headers, $body);
+
+if (PEAR::isError($mail)) {
+    echo('<p>' . $mail->getMessage() . '</p>');
+} else {
+    echo('<p>Message successfully sent!</p>');
+}
+
